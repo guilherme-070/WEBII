@@ -2,22 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Eixo;
 use Illuminate\Http\Request;
 use App\Repositories\EixoRepository;
+use App\Models\Eixo;
 
 class EixoController extends Controller
 {
-
+    
     protected $repository;
-
     public function __construct(){
-            $this->repository = new EixoRepository();
+    $this->repository = new EixoRepository();
     }
 
-    public function index() {
-        
-        $data = $this->repository->SelectAll();
+    public function index()
+    {
+        $data = $this-> repository->selectAll();
         return $data;
     }
 
@@ -29,12 +28,17 @@ class EixoController extends Controller
         //
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
-        $obj = new Eixo();
-        $obj->nome = mb_strtoupper($request->nome, 'UTF-8');
-        $this->repository->save($obj);
-        return "<h1>Store - OK!</h1>";
+        $objEixo = new Eixo();
+        $objEixo->nome = $request->nome;
+        $this->repository->save($objEixo);
+
+
+        return "OK - Store!!";
     }
 
     /**
@@ -42,7 +46,7 @@ class EixoController extends Controller
      */
     public function show(string $id)
     {
-        $data = $this->repository->findById($id);
+        $data = $this-> repository->findById($id);
         return $data;
     }
 
@@ -59,14 +63,14 @@ class EixoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $obj = $this->repository->findById($id);
-
-        if(isset($obj)) {
-            $obj->nome = mb_strtoupper($request->nome, 'UTF-8');
-            $this->repository->save($obj);
-            return "<h1>Upate - OK!</h1>";
+        $objEixo = $this->repository->findById($id);
+        if(isset($eixo)){
+            $eixo->nome = mb_strtoupper($request->nome, 'UTF-8');
+            $this->repository->save($eixo);
+            return "OK - Update!!";
         }
-        return "<h1>Upate - Not found Eixo!</h1>";
+
+        return "ERRO - Update!!";
     }
 
     /**
@@ -74,10 +78,9 @@ class EixoController extends Controller
      */
     public function destroy(string $id)
     {
-        if($this->repository->delete($id)) {
-            return "<h1>Delete - OK!</h1>";
+        if($this->repository->delete($id)){
+            return "OK - Destroy!!";
         }
-        
-        return "<h1>Delete - Not found Eixo!</h1>";
+        return "ERROR - Destroy!!";
     }
 }

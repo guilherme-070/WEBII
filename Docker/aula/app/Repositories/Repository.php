@@ -20,7 +20,7 @@ class Repository {
     public function selectAllWith(array $orm) {
         return $this->model::with($orm)->get();
     }
-   
+
     public function findById($id) {
         return $this->model->find($id);
     }
@@ -28,7 +28,7 @@ class Repository {
     public function findByIdWith(array $orm, $id) {
         return $this->model::with($orm)->find($id);
     }
-                    
+
     public function findByCompositeId($keys, $ids) {
         return $this->model::where($this->createRule($keys, $ids))->first();
     }
@@ -59,7 +59,7 @@ class Repository {
             $obj->save();     
             return true;
         } catch(Exception $e) { dd($e); }
-        
+
         return false;
     }
 
@@ -81,7 +81,7 @@ class Repository {
                 ->update($values);
             return true;
         } catch(Exception $e) { dd($e); }
-    
+
         return false;
     }
 
@@ -103,7 +103,7 @@ class Repository {
             DB::table($table)->where($this->createRule($keys, $ids))->delete();
             return true;
         } catch(Exception $e) { dd($e); }
-    
+
         return false;
     }
 
